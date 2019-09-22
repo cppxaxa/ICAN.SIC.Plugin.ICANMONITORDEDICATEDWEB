@@ -42,16 +42,19 @@ namespace ICAN.SIC.Plugin.ICANMONITORDEDICATEDWEB
                 var chatArray = JsonConvert.DeserializeObject<List<string>>(chatJson);
                 var machineMessageArray = JsonConvert.DeserializeObject<List<string>>(machineMessageJson);
 
-                double interval = 0;
-                foreach (var item in chatArray)
+                if (chatArray != null && machineMessageArray != null)
                 {
-                    hub.Publish<IUserResponse>(new UserResponse(item), TimeSpan.FromSeconds(interval));
-                    interval += 0.5;
-                }
-                foreach (var item in machineMessageArray)
-                {
-                    hub.Publish<IMachineMessage>(new MachineMessage(item), TimeSpan.FromSeconds(interval));
-                    interval += 0.5;
+                    double interval = 0;
+                    foreach (var item in chatArray)
+                    {
+                        hub.Publish<IUserResponse>(new UserResponse(item), TimeSpan.FromSeconds(interval));
+                        interval += 0.5;
+                    }
+                    foreach (var item in machineMessageArray)
+                    {
+                        hub.Publish<IMachineMessage>(new MachineMessage(item), TimeSpan.FromSeconds(interval));
+                        interval += 0.5;
+                    }
                 }
 
                 Thread.Sleep(this.sleepInterval);

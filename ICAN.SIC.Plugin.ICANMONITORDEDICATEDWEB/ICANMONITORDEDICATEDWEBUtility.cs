@@ -10,7 +10,14 @@ namespace ICAN.SIC.Plugin.ICANMONITORDEDICATEDWEB
 
             using (WebClient client = new WebClient())
             {
-                result = client.DownloadString(url);
+                try
+                {
+                    result = client.DownloadString(url);
+                }
+                catch
+                {
+
+                }
             }
 
             return result;
